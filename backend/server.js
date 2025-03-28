@@ -16,7 +16,7 @@ app.use(express.json()); // parse the request body as JSON
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/product", productRoutes);
+app.use("/api/products", productRoutes);
 
 app.listen(PORT, () => {
     console.log('Server started on http://localhost:' + PORT);

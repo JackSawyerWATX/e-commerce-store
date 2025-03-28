@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a product category"],
     },
-    countInStock: {
+    inventory: {
         type: Number,
         required: [true, "Please provide a product count in stock"],
     },
