@@ -143,3 +143,4 @@ async function updateFeatruedProductsCache() {
         console.log("Error in updateFeatruedProductsCache", error.message);
     }
 }
+
