@@ -16,6 +16,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 console.log(process.env.PORT);
+
 app.use(express.json()); // parse the request body as JSON
 app.use(cookieParser());
 
