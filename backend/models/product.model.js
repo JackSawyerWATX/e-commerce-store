@@ -21,13 +21,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a product category"],
     },
-    inventory: {
+    quantity: {
         type: Number,
         required: [true, "Please provide a product count in stock"],
-    },
-    rating: {
-        type: Number,
-        required: [true, "Please provide a product rating"],
     },
     isFeatured: {
         type: Boolean,

@@ -5,7 +5,7 @@ import {
     getAllProducts, 
     getFeaturedProducts,
     getRecommendedProducts,
-    getProductsByCatagory,
+    getProductsByCategory,
     toggleFeaturedProduct
 } from "../controllers/product.controller.js";
 import { adminRoute, protectRoute } from "../middleware/auth.middleware.js";
@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/", protectRoute, adminRoute, getAllProducts);
 router.get("/featured", getFeaturedProducts);
-router.get("/catagory/:catagory", getProductsByCatagory);
+router.get("/category/:category", getProductsByCategory);
 router.get("/recomendations", getRecommendedProducts);
 router.post("/", protectRoute, adminRoute, createProduct);
 router.patch("/:id", protectRoute, adminRoute, toggleFeaturedProduct);

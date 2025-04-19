@@ -1,13 +1,13 @@
 import CategoryItem from "../components/CategoryItem";
 
 const catagories = [
-    { href: "/motion_cameras", name: "Motion Cameras", imageUrl: "/motion_picture_camera.jpg" },
-    { href: "/motion_lenses", name: "Motion Picture Lenses", imageUrl: "motion_picture_camera_lenses.jpg" },
-    { href: "/still_cameras", name: "Still Cameras", imageUrl: "still_camera.jpg" },
-    { href: "/still_lenses", name: "Still Lenses", imageUrl: "still_camera_lenses.jpg" },
-    { href: "/lighting", name: "Lighting", imageUrl: "lighting.jpg" },
-    { href: "/camera_accessories", name: "Camera Accessories", imageUrl: "camera_accessories.jpg" },
-    { href: "/camera_support", name: "Camera Support", imageUrl: "camera_support.jpg" },
+    { href: "/motion_cameras", name: "Motion Cameras", image: "/motion_picture_camera.jpg" },
+    { href: "/motion_lenses", name: "Motion Lenses", image: "motion_picture_camera_lenses.jpg" },
+    { href: "/still_cameras", name: "Still Cameras", image: "still_camera.jpg" },
+    { href: "/still_lenses", name: "Still Lenses", image: "still_camera_lenses.jpg" },
+    { href: "/lighting", name: "Lighting", image: "lighting.jpg" },
+    { href: "/camera_accessories", name: "Camera Accessories", image: "camera_accessories.jpg" },
+    { href: "/camera_support", name: "Camera Support", image: "camera_support.jpg" },
 ];
 
 const HomePage = () => {
@@ -29,4 +29,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default HomePage;

@@ -3,12 +3,14 @@ import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
+
 import HomePage from "./pages/HomePage"
 import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
 import AdminPage from "./pages/AdminPage";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
     const { user, checkAuth, checkingAuth } = useUserStore((state) => state);
@@ -35,6 +37,7 @@ function App() {
                     <Route path="/signup" element={ !user ? <SignUpPage /> : <Navigate to='/' /> } />
                     <Route path="/login" element={ !user ? <LogInPage /> : <Navigate to='/' /> } />
                     <Route path="/admin-dashboard" element={ user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />} />
+                    <Route path="/category/:category" element={ <CategoryPage />} />
                 </Routes>
             </div>
             <Toaster />
