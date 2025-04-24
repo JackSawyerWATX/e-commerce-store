@@ -1,22 +1,24 @@
-import { Route, Routes } from "react-router-dom"
-import { Toaster } from "react-hot-toast";
-import { useUserStore } from "./stores/useUserStore";
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { useCartStore } from "./stores/useCartStore";
+import { Navigate, Route, Routes } from "react-router-dom"
 
 import HomePage from "./pages/HomePage"
 import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
-import Navbar from "./components/Navbar";
-import LoadingSpinner from "./components/LoadingSpinner";
 import AdminPage from "./pages/AdminPage";
 import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
 
+import Navbar from "./components/Navbar";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
+import { useCartStore } from "./stores/useCartStore";
+
+
 function App() {
-    const { user, checkAuth, checkingAuth } = useUserStore((state) => state);
-    const { getCartItems } = useCartStore((state) => state);
+    const { user, checkAuth, checkingAuth } = useUserStore();
+    const { getCartItems } = useCartStore();
 
     useEffect(() => {
         checkAuth();

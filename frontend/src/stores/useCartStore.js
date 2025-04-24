@@ -39,6 +39,31 @@ export const useCartStore = create((set, get) => ({
         }
     },
 
+    removeFromCart: async (productId) => {
+        await axios.delete(`/cart/`, { data: { productId } } );
+        set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));
+        get().calculateTotals();
+    },
+
+    updateQuantity: async (productId, quantity) => {
+        console.log('Updating quantity for product', productId, 'to', quantity);
+        if (quantity === 0) {
+            get().removeFromCart(productId);
+            return;
+        }
+
+        try {
+            await axios.put(`/cart/${productId}`, { quantity });
+            set((prevState) => ({
+                cart: prevState.cart.map((item) => (item._id === productId ? { ...item, quantity } : item)),
+            }));
+            get().calculateTotals();
+        } catch (error) {
+            toast.error(error.response.data.message || "An error occurred updating quantity.");
+            console.error('Error updating quantity:', error);
+        }
+    },
+
     calculateTotals: () => {
         const { cart, coupon } = get();
         const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
