@@ -12,7 +12,7 @@ const catagories = [
 
 const HomePage = () => {
     return (
-        <div className="realative min-h-screen bg-gray-900 text-white overflow-hidden">
+        <div className="realative min-h-screen text-white overflow-hidden">
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <h1 className="text-center text-5xl sm:text6xl font-bold text-emerald-400 mb-4">Welcome to Bishop's Cameras</h1>
                 <p className="text-center text-lg sm:text-xl mb-8">Find the perfect camera for your needs.</p>
