@@ -11,9 +11,13 @@ const GiftCouponCard = () => {
         console.log('Applying coupon:', userInputCode);
     };
 
+    const { handleRemoveCoupon } = () => {
+        console.log('Removing coupon:', userInputCode);
+    };
+
     return (
         <motion.div
-            className='space-y-4 ropunded-lg border border-gray-700 bg-gray-800 p-6 shadow-sm sm:p-6'
+            className='space-y-4 rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm sm:p-6'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}>
@@ -42,7 +46,7 @@ const GiftCouponCard = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleApplyCoupon}>
-
+                    Apply Code
                 </motion.button>
             </div>
 
@@ -67,9 +71,18 @@ const GiftCouponCard = () => {
                     >
                         Remove Coupon
                     </motion.button>
-
                 </div>
             )}
+
+            {coupon && (
+                <div className='mt-4'>
+                    <h3 className='text-lg font-medium text-gray-300'>Your Available Coupon:</h3>
+                    <p className='mt-2 text-sm text-gray-400'>
+                        {coupon.code} - {coupon.discountPercentage}% off
+                    </p>
+                </div>
+            )}
+
         </motion.div>
     )
 }

@@ -15,7 +15,7 @@ const PeopleAlsoBought = () => {
                 setRecommendations(res.data);
             } catch (error) {
                 console.error("Error fetching recommendations:", error);
-                toast.error(error.response.data.message || "Failed to fetch recommendations.");
+                toast.error(error?.response?.data?.message || "Failed to fetch recommendations.");
             } finally {
                 setIsLoading(false);
             }
