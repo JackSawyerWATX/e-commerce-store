@@ -9,6 +9,35 @@ export const useCartStore = create((set, get) => ({
     subtotal: 0,
     isCouponApplied: false,
 
+    getMyCoupon: async () => {
+        try {
+            const response = await axios.get("/coupons");
+            set({ coupon: response.data });
+        } catch (error) {
+            toast.error(error.response.data.message || "An error occurred getting coupon.");
+            console.error('Error getting coupon:', error);
+        }
+    },
+
+    applyCoupon: async (code) => {
+        try {
+            const response = await axios.post("/coupons/validate", { code });
+            set({ coupon: response.data, isCouponApplied: true });
+            get().calculateTotals();
+            toast.success("Coupon applied successfully.", { id: "applyCoupon" });
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "An error occurred applying coupon.";
+            toast.error(errorMessage);
+            console.error('Error applying coupon:', error);
+        }
+    },
+
+    removeCoupon: () => {
+        set({ coupon: null, isCouponApplied: false });
+        get().calculateTotals();
+        toast.success("Coupon removed successfully.", { id: "removeCoupon" });
+    },
+
     getCartItems: async () => {
         try {
             const res = await axios.get("/cart");
@@ -22,7 +51,6 @@ export const useCartStore = create((set, get) => ({
 
     clearCart: () => {
         set({ cart: [], coupon:null, total:0, subtotal:0 });
-        get().calculateTotals();
     },
 
     addToCart: async (product) => {
@@ -46,9 +74,15 @@ export const useCartStore = create((set, get) => ({
     },
 
     removeFromCart: async (productId) => {
-        await axios.delete(`/cart/`, { data: { productId } } );
-        set((prevState) => ({ cart: prevState.cart.filter((item) => item._id !== productId) }));
-        get().calculateTotals();
+        try {
+            await axios.delete(`/cart/`, { data: { productId } });
+            set((prevState) => ({
+                cart: prevState.cart.filter((item) => item._id !== productId),
+            }));
+            get().calculateTotals();
+        } catch (error) {
+            toast.error(error.response.data.message || "An error occurred removing items from cart.");
+        }
     },
 
     updateQuantity: async (productId, quantity) => {

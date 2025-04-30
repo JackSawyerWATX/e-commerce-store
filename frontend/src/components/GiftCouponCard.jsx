@@ -1,17 +1,29 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useCartStore } from '../stores/useCartStore';
 
 const GiftCouponCard = () => {
 
-    const { userInputCode, setUserInputCode } = useState('');
-    const { coupon, isCouponApplied } = useCartStore()
+    const [userInputCode, setUserInputCode] = useState('');
+    const { coupon, isCouponApplied, applyCoupon, getMyCoupon, removeCoupon } = useCartStore();
 
-    const { handleApplyCoupon } = () => {
+    useEffect(() => {
+        getMyCoupon();
+    }, [getMyCoupon]);
+
+    useEffect(() => {
+        if (coupon) setUserInputCode(coupon.code);
+    }, [coupon]);
+
+    const handleApplyCoupon = () => {
+        if (!userInputCode) return;
+        applyCoupon(userInputCode);
         console.log('Applying coupon:', userInputCode);
     };
 
-    const { handleRemoveCoupon } = () => {
+    const handleRemoveCoupon = async () => {
+        await removeCoupon();
+        setUserInputCode('');
         console.log('Removing coupon:', userInputCode);
     };
 
@@ -38,6 +50,7 @@ const GiftCouponCard = () => {
                         required
                     />
                 </div>
+
                 <motion.button
                     type='button'
                     className='flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm
@@ -67,14 +80,13 @@ const GiftCouponCard = () => {
                             focus:ring-4 focus:ring-red-300'
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={handleRemoveCoupon}
-                    >
+                        onClick={handleRemoveCoupon} >
                         Remove Coupon
                     </motion.button>
                 </div>
             )}
 
-            {coupon && (
+            {coupon && !isCouponApplied && (
                 <div className='mt-4'>
                     <h3 className='text-lg font-medium text-gray-300'>Your Available Coupon:</h3>
                     <p className='mt-2 text-sm text-gray-400'>
@@ -82,9 +94,8 @@ const GiftCouponCard = () => {
                     </p>
                 </div>
             )}
-
         </motion.div>
-    )
-}
+    );
+};
 
-export default GiftCouponCard
+export default GiftCouponCard;

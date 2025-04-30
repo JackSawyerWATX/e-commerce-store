@@ -4,7 +4,17 @@ import { Loader, PlusCircle, Upload } from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
 
 // const categories = ["Motion Cameras", "Motion Lenses", "Still Cameras", "Still Lenses", "Lighting", "Camera Accessories", "Camera Support"];
-const categories = ["motion_cameras", "motion_lenses", "still_cameras", "still_lenses", "lighting", "camera_accessories", "camera_support"];
+const categories = [
+    "motion_cameras",
+    "motion_film",
+    "motion_lenses",
+    "still_cameras",
+    "photography_film",
+    "still_lenses",
+    "lighting",
+    "camera_accessories",
+    "camera_support"
+];
 
 const CreateProductForm = () => {
     const [newProduct, setNewProduct] = useState({

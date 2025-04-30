@@ -12,10 +12,9 @@ export const getAnalyticsData = async () => {
                 _id: null,
                 totalSales: { $sum: 1 },
                 totalRevenue: { $sum: "$totalAmount" }
-
-            }
-        }
-    ])
+            },
+        },
+    ]);
 
     const { totalSales, totalRevenue } = salesData[0] || { totalSales: 0, totalRevenue: 0 }
 
@@ -47,26 +46,22 @@ export const getDailySalesData = async (startDate, endDate) => {
             }
         ]);
 
-        // dailySalesData example
-        // [
-        //     {
-        //         _id: "XXXXXXXXXX",
-        //         totalSales: 10,
-        //         totalRevenue: 5000
-        //     }
-        // ]
-
+        console.log("Daily Sales Data:", dailySalesData);
         const dateArray = getDatesInRange(startDate, endDate);
         console.log(dateArray);
 
         return dateArray.map(date => {
             const foundData = dailySalesData.find(item => item._id === date);
+            console.log(foundData);
+            console.log("Generated Date Array:", dateArray);
+            console.log("Aggregated Daily Sales Data:", dailySalesData);
+
 
             return {
                 date,
-                sales: foundData?.sales || 0,
-                revenue: foundData?.revenue || 0
-            }
+                sales: foundData?.totalSales || 0,
+                revenue: foundData?.totalRevenue || 0,
+            };
         });
     } catch (error) {
         throw error;
@@ -79,7 +74,7 @@ function getDatesInRange(startDate, endDate) {
 
     while (currentDate <= endDate) {
         dates.push(currentDate.toISOString().split("T")[0]);
-        currentDate.setDate(date.getDate() + 1);
+        currentDate.setDate(currentDate.getDate() + 1);
     }
 
     return dates;
