@@ -1,3 +1,5 @@
+import { createRateLimits } from './middleware/rate-limit.middleware.js';
+import { redis } from './lib/redis.js';
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
@@ -15,6 +17,11 @@ import { connectDB } from './lib/db.js';
 dotenv.config();
 
 const app = express();
+// Render terminates connections at one trusted reverse-proxy hop.
+app.set('trust proxy', 1);
+const limits = createRateLimits(redis);
+app.use('/api', limits.api);
+app.use(['/api/auth/login', '/api/auth/signup'], limits.auth);
 const PORT = process.env.PORT || 5000;
 console.log(process.env.PORT);
 
