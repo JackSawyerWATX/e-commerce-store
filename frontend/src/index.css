@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :is(a, button, input, select, textarea):focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-emerald-400;
+  }
+}
+
+@layer components {
+  .store-panel {
+    @apply overflow-hidden rounded-xl border border-white/10 bg-gray-800/60;
+  }
+
+  .store-button {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-gray-900 transition-colors hover:bg-emerald-300;
+  }
+}
+
+.hero-spiral {
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, rgb(6 78 59 / 0.58), transparent 67%);
+}
+
+.hero-spiral::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: url('/hero-spiral.svg') center / contain no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-spiral::before {
+    animation: hero-spiral-spin 32s linear infinite;
+  }
+}
+
+@keyframes hero-spiral-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

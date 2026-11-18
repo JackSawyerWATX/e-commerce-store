@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react';
 import { useCartStore } from '../stores/useCartStore';
 import { Link } from "react-router-dom";
 import { MoveRight } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
 import axios from '../lib/axios';
 
-const stripePromise = loadStripe("pk_test_51R90NIALgn9Ia1pybt68Y1vYQ1mpKL4gyLYm7jdM1CRRwp9HRPGHIpB09aUebeKLUxu5IqRQ8xzCTWDQOeXyr5M400M5FsfEM0");
-
-const OrderSummary = () => {
+const OrderSummary = ({ onCheckout }) => {
+    const [isStartingCheckout, setIsStartingCheckout] = useState(false);
+    const [checkoutError, setCheckoutError] = useState("");
 
     const { total, subtotal, coupon, isCouponApplied, cart } = useCartStore();
 
@@ -17,24 +17,24 @@ const OrderSummary = () => {
     const formattedSavings = savings.toFixed(2);
 
     const handlePayment = async () => {
-        const stripe = await stripePromise;
-        const res = await axios.post("/payments/create-checkout-session", {
-            products: cart,
-            couponCode: coupon ? coupon.code : null,
-        });
-
-        const session = res.data;
-        const result = await stripe.redirectToCheckout({
-            sessionId: session.id,
-        });
-        if(result.error) {
-            console.error("Error: ", result.error.message);
+        setIsStartingCheckout(true);
+        setCheckoutError("");
+        try {
+            const { data } = await axios.post("/payments/create-checkout-session", {
+                products: cart.map(({ _id, quantity }) => ({ _id, quantity })),
+                couponCode: isCouponApplied ? coupon?.code : null,
+            });
+            onCheckout(data);
+        } catch (error) {
+            setCheckoutError(error.response?.data?.message || "Checkout could not be started. Please try again.");
+        } finally {
+            setIsStartingCheckout(false);
         }
     };
 
     return (
         <motion.div
-            className='space-y-4 rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-sm sm:p-6'
+            className='store-panel space-y-4 p-4 sm:p-6'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }} >
@@ -66,14 +66,10 @@ const OrderSummary = () => {
                     </dl>
                 </div>
 
-                <motion.button
-                    className='flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handlePayment} >
-
-                    Proceed to Checkout
-                </motion.button>
+                <button type="button" className="store-button w-full disabled:opacity-60" disabled={isStartingCheckout} onClick={handlePayment}>
+                    {isStartingCheckout ? "Opening checkout…" : "Proceed to checkout"}
+                </button>
+                {checkoutError && <p role="alert" className="text-sm text-red-300">{checkoutError}</p>}
 
                 <div className='flex items-center justify-center gap-2'>
                     <span className='text-sm font-normal text-gray-400'>or</span>

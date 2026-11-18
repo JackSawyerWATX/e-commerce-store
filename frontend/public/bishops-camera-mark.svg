@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" fill="none">
+  <defs>
+    <linearGradient id="emerald" x1="70" y1="25" x2="300" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="#111827" stroke="url(#emerald)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Film magazine -->
+    <path d="M150 119V87a40 40 0 0 1 72.5-23.3A40 40 0 0 1 295 87v32Z"/>
+    <circle cx="190" cy="87" r="21" stroke-width="3"/>
+    <circle cx="255" cy="87" r="21" stroke-width="3"/>
+
+    <!-- Lens barrel and flared matte box -->
+    <path d="M126 143h29v39h-29zM91 137h35v51H91z"/>
+    <path d="M48 122l43 15v51l-43 15z"/>
+    <path d="M57 136v53m53-42v31" stroke-width="3"/>
+
+    <!-- Camera housing and finder -->
+    <rect x="147" y="119" width="151" height="84" rx="12"/>
+    <path d="M298 137h18l8-7v29l-8-7h-18"/>
+    <rect x="167" y="139" width="55" height="40" rx="6" stroke-width="3"/>
+    <circle cx="264" cy="159" r="13" stroke-width="3"/>
+    <path d="M176 203v15h95v-15m-122 15h148"/>
+  </g>
+</svg>
