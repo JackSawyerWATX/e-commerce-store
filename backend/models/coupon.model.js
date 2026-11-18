@@ -17,6 +17,7 @@ const couponSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+        earnedAt: Date,
         isActive: {
             type: Boolean,
             default: true,

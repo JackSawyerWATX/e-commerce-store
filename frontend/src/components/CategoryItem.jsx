@@ -1,24 +1,19 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 
 const CategoryItem = ({ category }) => {
     return (
-        <div className='relative overflow-hidden h-96 w-full rounded-lg group'>
-            <Link to={"/category" + category.href}>
-                <div className='w-full h-full cursor-pointer'>
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-50 z-10' />
-                    <img
-                        src={category.image}
-                        alt={category.name}
-                        className='w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110'
-                        loading='lazy'
-                    />
-                    <div className='absolute bottom-0 left-0 right-0 p-4 z-20'>
-                        <h3 className='text-white text-2xl font-bold mb-2'>{category.name}</h3>
-                        <p className='text-gray-200 text-sm'>Explore {category.name}</p>
-                    </div>
-                </div>
-            </Link>
-        </div>
+        <Link to={"/category" + category.href} className="store-panel group flex flex-col transition-colors hover:border-emerald-400/60">
+            <div className="aspect-[16/10] overflow-hidden bg-gray-200">
+                <img src={category.image} alt="" loading="lazy" className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105" />
+            </div>
+            <div className="flex flex-1 items-center justify-between gap-4 px-5 py-4">
+                <h3 className="text-lg font-semibold leading-tight tracking-tight">{category.name}</h3>
+                <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 text-emerald-400 transition-colors group-hover:border-emerald-400 group-hover:bg-emerald-400 group-hover:text-gray-900">
+                    <ArrowUpRight aria-hidden="true" size={17} />
+                </span>
+            </div>
+        </Link>
     );
 };
 
